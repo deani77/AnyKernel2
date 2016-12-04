@@ -4,7 +4,7 @@
 ## AnyKernel setup
 # EDIFY properties
 kernel.string=
-do.devicecheck=1
+do.devicecheck=0
 do.initd=0
 do.modules=0
 do.cleanup=1
@@ -33,6 +33,9 @@ chmod -R 755 $ramdisk
 dump_boot;
 
 # begin ramdisk changes
+
+# Remove su binary
+rm /sbin/su
 
 # end ramdisk changes
 

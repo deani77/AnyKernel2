@@ -67,7 +67,7 @@ if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.initd)" == 1 ]; then
   mount -o remount,ro -t auto /system;
 fi;
 
-ui_print "Installing kernel...";
+ui_print "Installing kernel and killing root...";
 for i in $($bb --list); do
   $bb ln -s $bb /tmp/anykernel/bin/$i;
 done;
@@ -78,6 +78,12 @@ PATH="/tmp/anykernel/bin:$PATH" $bb ash /tmp/anykernel/anykernel.sh $2;
 if [ $? != "0" ]; then
   abort;
 fi;
+
+ui_print "Killing Superuser APK";
+ui_print " ";
+mount -o remount,rw -t auto /system;
+rm -rf /system/app/Superuser;
+mount -o remount,ro -t auto /system;
 
 if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.modules)" == 1 ]; then
   ui_print " ";
